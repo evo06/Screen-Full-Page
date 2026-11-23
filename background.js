@@ -160,8 +160,15 @@ async function startCaptureFlow({ mode, tab, delaySeconds }) {
   }
 }
 
+async function setBadgeTheme(tabId, color) {
+  await chrome.action.setBadgeBackgroundColor({ tabId, color });
+  if (chrome.action.setBadgeTextColor) {
+    await chrome.action.setBadgeTextColor({ tabId, color: "#F5F9DC" }).catch(() => {});
+  }
+}
+
 async function runCountdownBadge(tabId, seconds) {
-  await chrome.action.setBadgeBackgroundColor({ tabId, color: "#2563eb" });
+  await setBadgeTheme(tabId, "#4C621A");
   for (let remaining = seconds; remaining > 0; remaining--) {
     await chrome.action.setBadgeText({ tabId, text: `${remaining}s` });
     await sleep(1000);
@@ -226,7 +233,7 @@ async function finishSelectionCapture(tab, payload) {
 
 async function captureFullPage(tab) {
   activeCaptureTabId = tab.id;
-  await chrome.action.setBadgeBackgroundColor({ tabId: tab.id, color: "#0ea5e9" });
+  await setBadgeTheme(tab.id, "#4C621A");
   await chrome.action.setBadgeText({ tabId: tab.id, text: "..." });
 
   let prepared = false;

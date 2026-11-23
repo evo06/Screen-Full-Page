@@ -17,7 +17,7 @@
       position: fixed;
       inset: 0;
       cursor: crosshair;
-      background: rgba(15, 23, 42, 0.42);
+      background: rgba(21, 28, 8, 0.44);
     }
     .backdrop.has-selection {
       background: transparent;
@@ -27,13 +27,15 @@
       top: 14px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(15, 23, 42, 0.92);
-      color: #f8fafc;
-      font: 500 12px/1.4 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      padding: 7px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+      background: rgba(21, 28, 8, 0.90);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #F5F9DC;
+      font: 500 12px/1.4 "Helvetica Neue", Helvetica, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      padding: 7px 16px;
+      border-radius: 9999px;
+      border: 1px solid rgba(245, 249, 220, 0.28);
+      box-shadow: 0 10px 28px rgba(10, 14, 3, 0.42);
       pointer-events: none;
       white-space: nowrap;
       z-index: 4;
@@ -41,8 +43,8 @@
     .selection-box {
       position: fixed;
       display: none;
-      border: 2px solid #38bdf8;
-      box-shadow: 0 0 0 99999px rgba(15, 23, 42, 0.48);
+      border: 2px solid #A4C639;
+      box-shadow: 0 0 0 99999px rgba(21, 28, 8, 0.52);
       cursor: move;
       z-index: 2;
     }
@@ -50,22 +52,23 @@
       position: absolute;
       top: -28px;
       left: 0;
-      background: #0f172a;
-      color: #f8fafc;
+      background: #151C08;
+      color: #D8EB8A;
       font: 600 11px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
-      padding: 4px 8px;
-      border-radius: 6px;
-      border: 1px solid rgba(56, 189, 248, 0.55);
+      padding: 4px 10px;
+      border-radius: 9999px;
+      border: 1px solid rgba(216, 235, 138, 0.55);
+      box-shadow: 0 4px 12px rgba(10, 14, 3, 0.35);
       white-space: nowrap;
       pointer-events: none;
     }
     .handle {
       position: absolute;
-      width: 10px;
-      height: 10px;
-      background: #ffffff;
-      border: 2px solid #0284c7;
-      border-radius: 2px;
+      width: 11px;
+      height: 11px;
+      background: #F5F9DC;
+      border: 2px solid #4C621A;
+      border-radius: 50%;
     }
     .handle[data-dir="nw"] { top: -6px; left: -6px; cursor: nwse-resize; }
     .handle[data-dir="ne"] { top: -6px; right: -6px; cursor: nesw-resize; }
@@ -76,28 +79,31 @@
       display: none;
       gap: 6px;
       padding: 5px;
-      background: rgba(15, 23, 42, 0.94);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 10px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.32);
+      background: rgba(21, 28, 8, 0.90);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(245, 249, 220, 0.28);
+      border-radius: 9999px;
+      box-shadow: 0 12px 28px rgba(10, 14, 3, 0.45);
       z-index: 5;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      font-family: "Helvetica Neue", Helvetica, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
     }
     .btn {
       border: 0;
-      border-radius: 7px;
-      padding: 6px 12px;
+      border-radius: 9999px;
+      padding: 6px 14px;
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 5px;
+      transition: background-color 140ms cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .btn-primary { background: #0ea5e9; color: #ffffff; }
-    .btn-primary:hover { background: #0284c7; }
-    .btn-cancel { background: rgba(255, 255, 255, 0.12); color: #f8fafc; }
-    .btn-cancel:hover { background: rgba(255, 255, 255, 0.22); }
+    .btn-primary { background: #A4C639; color: #151C08; }
+    .btn-primary:hover { background: #D8EB8A; }
+    .btn-cancel { background: rgba(245, 249, 220, 0.12); color: #F5F9DC; }
+    .btn-cancel:hover { background: rgba(245, 249, 220, 0.22); }
   `;
 
   const backdrop = document.createElement("div");

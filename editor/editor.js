@@ -177,12 +177,12 @@ function drawAnnotation(ctx, item) {
     ctx.stroke();
   } else if (item.type === "text" && item.text) {
     const fontSize = item.fontSize || 20;
-    ctx.font = `700 ${fontSize}px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`;
+    ctx.font = `700 ${fontSize}px "Helvetica Neue", Helvetica, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`;
     ctx.textBaseline = "top";
     // Subtle contrast outline so text remains legible over light or dark content
     ctx.lineWidth = Math.max(3, Math.round(fontSize * 0.16));
     ctx.strokeStyle =
-      item.color.toLowerCase() === "#ffffff" ? "rgba(15,23,42,0.85)" : "rgba(255,255,255,0.9)";
+      item.color.toLowerCase() === "#ffffff" ? "rgba(21,28,8,0.88)" : "rgba(255,255,255,0.9)";
     ctx.strokeText(item.text, item.x, item.y);
     ctx.fillStyle = item.color;
     ctx.fillText(item.text, item.x, item.y);
@@ -219,13 +219,13 @@ function renderStage() {
 function drawOverlaySelection(r, dimOutside) {
   stageCtx.save();
   if (dimOutside) {
-    stageCtx.fillStyle = "rgba(15, 23, 42, 0.5)";
+    stageCtx.fillStyle = "rgba(21, 28, 8, 0.54)";
     stageCtx.fillRect(0, 0, stageCanvas.width, r.y);
     stageCtx.fillRect(0, r.y + r.h, stageCanvas.width, stageCanvas.height - (r.y + r.h));
     stageCtx.fillRect(0, r.y, r.x, r.h);
     stageCtx.fillRect(r.x + r.w, r.y, stageCanvas.width - (r.x + r.w), r.h);
   }
-  stageCtx.strokeStyle = "#38bdf8";
+  stageCtx.strokeStyle = "#A4C639";
   stageCtx.lineWidth = Math.max(2, (captureMeta.dpr || 1) * 1.5);
   stageCtx.setLineDash([8, 5]);
   stageCtx.strokeRect(r.x, r.y, r.w, r.h);
