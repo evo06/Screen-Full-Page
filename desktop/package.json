@@ -1,0 +1,95 @@
+{
+  "name": "screensnap-desktop",
+  "version": "1.1.0",
+  "description": "ScreenSnap Desktop — Captura de tela (região, monitor e janela) com editor leve e exportação PNG, JPEG, PDF e área de transferência.",
+  "author": "Assis",
+  "license": "MIT",
+  "main": "src/main/main.js",
+  "scripts": {
+    "icons": "node scripts/generate-icons.mjs",
+    "start": "electron .",
+    "test": "node --test tests/unit.test.mjs",
+    "smoke": "electron . --smoke-test",
+    "build:win": "npm run icons && electron-builder --win --x64",
+    "build:mac": "npm run icons && electron-builder --mac",
+    "build:linux": "npm run icons && electron-builder --linux"
+  },
+  "devDependencies": {
+    "electron": "^35.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.screensnap.desktop",
+    "productName": "ScreenSnap",
+    "directories": {
+      "buildResources": "build",
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "asar": true,
+    "win": {
+      "icon": "build/icon.ico",
+      "extraResources": [
+        {
+          "from": "scripts/windows",
+          "to": "scripts/windows",
+          "filter": [
+            "toggle-win-shift-s.ps1",
+            "Liberar-WinShiftS.bat"
+          ]
+        }
+      ],
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "ScreenSnap",
+      "artifactName": "ScreenSnap-Setup-${version}-x64.${ext}"
+    },
+    "portable": {
+      "artifactName": "ScreenSnap-Portable-${version}-x64.${ext}"
+    },
+    "mac": {
+      "icon": "build/icon.png",
+      "category": "public.app-category.productivity",
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "artifactName": "ScreenSnap-${version}-mac-${arch}.${ext}",
+      "extendInfo": {
+        "NSScreenCaptureUsageDescription": "ScreenSnap precisa de permissão de Gravação de Tela para capturar regiões, janelas e monitores."
+      }
+    },
+    "linux": {
+      "icon": "build/icon.png",
+      "category": "Utility;Graphics",
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "artifactName": "ScreenSnap-${version}-linux-${arch}.${ext}"
+    }
+  }
+}

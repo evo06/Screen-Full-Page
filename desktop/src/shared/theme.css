@@ -1,0 +1,86 @@
+/**
+ * ScreenSnap Desktop — Shared Zagid Moss & Citron Design Tokens
+ * Adapted from the ScreenSnap extension theme and ByZagid reference aesthetic.
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* Primitive Palette */
+  --ds-moss-950: #151C08;
+  --ds-moss-900: #1E280C;
+  --ds-moss-850: #273411;
+  --ds-moss-800: #3A4A18;
+  --ds-moss-700: #4C621A;
+  --ds-moss-600: #627E23;
+  --ds-citron-500: #A4C639;
+  --ds-pistachio-300: #D8EB8A;
+  --ds-ivory-100: #F5F9DC;
+  --ds-sage-muted: #B5C496;
+
+  /* Semantic Tokens */
+  --ds-bg-canvas: var(--ds-moss-950);
+  --ds-bg-surface: var(--ds-moss-900);
+  --ds-bg-surface-elevated: var(--ds-moss-850);
+  --ds-bg-glass: rgba(245, 249, 220, 0.06);
+  --ds-bg-glass-hover: rgba(76, 98, 26, 0.48);
+  --ds-bg-glass-scrim: rgba(21, 28, 8, 0.56);
+
+  --ds-text-primary: var(--ds-ivory-100);
+  --ds-text-secondary: var(--ds-sage-muted);
+  --ds-text-accent: var(--ds-pistachio-300);
+  --ds-text-on-accent: var(--ds-moss-950);
+
+  --ds-border-hairline: rgba(245, 249, 220, 0.18);
+  --ds-border-glass: rgba(245, 249, 220, 0.28);
+  --ds-border-strong: rgba(216, 235, 138, 0.62);
+
+  --ds-danger-bg: rgba(239, 68, 68, 0.16);
+  --ds-danger-border: rgba(248, 113, 113, 0.42);
+  --ds-danger-text: #fecaca;
+  --ds-warning-bg: rgba(251, 191, 36, 0.16);
+  --ds-warning-border: rgba(251, 191, 36, 0.42);
+  --ds-warning-text: #fde68a;
+
+  /* Typography & Radii */
+  --ds-font-sans: "Helvetica Neue", Helvetica, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --ds-font-mono: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+
+  --ds-gradient-display: linear-gradient(90deg, #F5F9DC 0%, #F5F9DC 36%, #D8EB8A 66%, #A4C639 100%);
+  --ds-mesh-popup:
+    radial-gradient(85% 65% at 8% 36%, rgba(216, 235, 138, 0.34) 0%, rgba(164, 198, 57, 0.16) 38%, transparent 72%),
+    radial-gradient(75% 60% at 18% 95%, rgba(216, 235, 138, 0.38) 0%, rgba(76, 98, 26, 0.28) 52%, transparent 82%),
+    radial-gradient(70% 65% at 92% 15%, rgba(21, 28, 8, 0.96) 0%, transparent 80%),
+    linear-gradient(155deg, #1E280C 0%, #273411 45%, #151C08 100%);
+  --ds-mesh-launcher:
+    radial-gradient(85% 65% at 8% 36%, rgba(216, 235, 138, 0.34) 0%, rgba(164, 198, 57, 0.16) 38%, transparent 72%),
+    radial-gradient(75% 60% at 18% 95%, rgba(216, 235, 138, 0.38) 0%, rgba(76, 98, 26, 0.28) 52%, transparent 82%),
+    radial-gradient(70% 65% at 92% 15%, rgba(21, 28, 8, 0.96) 0%, transparent 80%),
+    linear-gradient(155deg, #1E280C 0%, #273411 45%, #151C08 100%);
+
+  --ds-radius-sm: 10px;
+  --ds-radius-md: 14px;
+  --ds-radius-lg: 20px;
+  --ds-radius-pill: 9999px;
+  --ds-blur-glass: 14px;
+  --ds-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hidden,
+[hidden] {
+  display: none !important;
+}
+
+:where(button, a, input, select, textarea):focus-visible {
+  outline: 2px solid var(--ds-pistachio-300);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

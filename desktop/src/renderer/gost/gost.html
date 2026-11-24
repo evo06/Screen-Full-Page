@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'" />
+  <title>ScreenSnap Gost</title>
+  <link rel="stylesheet" href="gost.css" />
+</head>
+<body>
+  <button
+    id="gostBtn"
+    class="gost-btn"
+    type="button"
+    title="ScreenSnap Gost — Clique para capturar o primeiro plano (arraste para mover, clique direito para opções)"
+    aria-label="ScreenSnap Gost — Clique para capturar o primeiro plano (arraste para mover, clique direito para opções)"
+  >
+    <svg class="gost-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"
+        stroke="#A4C639"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M7.5 11a1.5 1.5 0 0 1 1.5-1.5h1l.9-1.2h2.2l.9 1.2h1A1.5 1.5 0 0 1 16.5 11v4a1.5 1.5 0 0 1-1.5 1.5H9A1.5 1.5 0 0 1 7.5 15v-4Z"
+        stroke="#D8EB8A"
+        stroke-width="1.6"
+        stroke-linejoin="round"
+      />
+      <circle cx="12" cy="13" r="1.75" stroke="#A4C639" stroke-width="1.6" />
+    </svg>
+  </button>
+
+  <script src="gost.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self'" />
+  <title>ScreenSnap — Capturar Tela</title>
+  <link rel="stylesheet" href="../../shared/theme.css" />
+  <link rel="stylesheet" href="overlay.css" />
+</head>
+<body>
+  <img id="freezeImg" alt="" draggable="false" />
+
+  <div id="backdrop" class="backdrop"></div>
+
+  <div id="toolbarWrap" class="toolbar-wrap" role="toolbar" aria-label="Modo de captura">
+    <div id="captureToolbar" class="capture-toolbar">
+      <button id="btnModeRegion" class="mode-btn active" type="button" title="Arraste para escolher um pedaço da tela">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 3a2 2 0 0 0-2 2v2M19 3a2 2 0 0 1 2 2v2M5 21a2 2 0 0 1-2-2v-2M19 21a2 2 0 0 0 2-2v-2"/>
+          <rect x="7" y="7" width="10" height="10" rx="1" stroke-dasharray="3 2"/>
+        </svg>
+        <span>Pedaço</span>
+      </button>
+
+      <button id="btnModeFull" class="mode-btn" type="button" title="Capturar a tela inteira agora (F)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="3" width="20" height="14" rx="2"/>
+          <path d="M8 21h8M12 17v4"/>
+        </svg>
+        <span>Tela inteira</span>
+        <kbd class="mode-kbd">F</kbd>
+      </button>
+
+      <span class="toolbar-divider" aria-hidden="true"></span>
+
+      <button id="btnToolbarCancel" class="mode-btn mode-btn--cancel" type="button" title="Cancelar (Esc)" aria-label="Cancelar captura">×</button>
+    </div>
+
+    <div id="hintPill" class="hint-pill">
+      Arraste para escolher um pedaço ou clique em Tela inteira • Esc cancela
+    </div>
+  </div>
+
+  <div id="selectionBox" class="selection-box" role="region" aria-label="Área de seleção">
+    <div id="dimBadge" class="dim-badge">0 × 0 px</div>
+    <div class="handle" data-dir="nw"></div>
+    <div class="handle" data-dir="ne"></div>
+    <div class="handle" data-dir="sw"></div>
+    <div class="handle" data-dir="se"></div>
+  </div>
+
+  <div id="actions" class="actions">
+    <button id="btnCapture" class="btn btn-primary" type="button">Capturar área</button>
+    <button id="btnCancel" class="btn btn-cancel" type="button">Cancelar</button>
+  </div>
+
+  <script src="overlay.js"></script>
+</body>
+</html>

@@ -69,24 +69,48 @@ Todo o processamento acontece localmente no navegador — sem servidores externo
 
 ## Aplicativo Desktop (Windows, macOS e Linux)
 
-Além da extensão para navegador, o **ScreenSnap Desktop** (Electron) permite capturar **regiões com tela congelada (*freeze-frame*)**, **monitores inteiros** (multi-monitor) e **janelas específicas**, com atalhos globais configuráveis (`PrtSc` como padrão no Windows/Linux, suporte automático a `Win+Shift+S` quando livre), bandeja do sistema, editor leve e exportação para **PNG**, **JPEG**, **PDF** e área de transferência.
+Além da extensão para navegador, o **ScreenSnap Desktop** (Electron) permite capturar com escolha imediata entre **um pedaço da tela (*freeze-frame*)** ou a **tela inteira** (multi-monitor e janelas específicas), com atalhos globais configuráveis (`PrtSc` como padrão no Windows/Linux, suporte automático a `Win+Shift+S` quando livre), **Modo Gost** (botão flutuante discreto `48×48` em janela `64×64`, sempre no topo sem roubar foco, semi-transparente parado — padrão `30%`, ajustável entre `15%` e `85%` — que acende ao passar o mouse, oculta-se antes do print, abre o seletor **Pedaço** / **Tela inteira** ao clicar, é arrastável com posição persistida e traz menu rápido no clique direito além de controles no Launcher e na Bandeja do sistema), editor leve e exportação para **PNG**, **JPEG**, **PDF** e área de transferência.
 
 Os instaladores são distribuídos via **[GitHub Releases](https://github.com/evo06/Screen-Full-Page/releases/latest)**:
 
 | Plataforma | Arquivo / Formato | Tamanho | Download |
 | --- | --- | --- | --- |
-| **Windows (x64)** | Instalador NSIS (`ScreenSnap-Setup-1.0.0-x64.exe`) | `87,5 MB` | [Baixar Instalador](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Setup-1.0.0-x64.exe) |
-| **Windows (x64)** | Portátil (`ScreenSnap-Portable-1.0.0-x64.exe`) | `80,3 MB` | [Baixar Portátil](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Portable-1.0.0-x64.exe) |
+| **Windows (x64)** | Instalador NSIS (`ScreenSnap-Setup-1.1.0-x64.exe`) | `87,49 MB` | [Baixar Instalador](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Setup-1.1.0-x64.exe) |
+| **Windows (x64)** | Portátil (`ScreenSnap-Portable-1.1.0-x64.exe`) | `80,35 MB` | [Baixar Portátil](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Portable-1.1.0-x64.exe) |
 | **macOS** | `.dmg` / `.zip` | — | [Ver na Release](https://github.com/evo06/Screen-Full-Page/releases/latest) |
 | **Linux** | `.AppImage` / `.deb` | — | [Ver na Release](https://github.com/evo06/Screen-Full-Page/releases/latest) |
 
 <details>
-<summary>Checksums SHA-256 (Windows x64 v1.0.0)</summary>
+<summary>Checksums SHA-256 (Windows x64 v1.1.0)</summary>
 
 ```text
-93F4BC62FA497BCB88C9052AAEB5EF2089CE45A2B066AC50582DDC78EC4C35BF  ScreenSnap-Setup-1.0.0-x64.exe
-A71720937C534FCE6D67A78DC1B56B1C2C8B5CCE35EF240DF274A0EAA8023987  ScreenSnap-Portable-1.0.0-x64.exe
+BC1873E9D9F24B0211C75996B28DCD3B551DDE044C43965FCAE926115C99F4F1  ScreenSnap-Setup-1.1.0-x64.exe
+5E7338D4349319D4363C7E80121F5ED4647D71CE4412E69B774ECDD3529AB0A3  ScreenSnap-Portable-1.1.0-x64.exe
 ```
+
+*(As releases publicadas via GitHub Actions também anexam `SHA256SUMS.txt` com os hashes de todas as plataformas — Windows, macOS e Linux.)*
+
+</details>
+
+<details>
+<summary>Passo a passo: como liberar o atalho nativo Win+Shift+S (e PrtSc) no Windows 10/11</summary>
+
+No Windows 10/11, `Win+Shift+S` costuma vir reservado para a Ferramenta de Captura nativa (*Snipping Tool*). Este passo a passo também está disponível dentro do Launcher em **Personalizar atalhos → Como liberar Win+Shift+S no Windows?**:
+
+1. **Opção 1 — Microsoft PowerToys (recomendado, sem mexer no Registro):**
+   - Instale o **Microsoft PowerToys** (Microsoft Store) e abra **Gerenciador de Teclado** (*Keyboard Manager*).
+   - Ative o recurso e acesse **Remapear um atalho** → **Adicionar**.
+   - Em *Atalho físico*, pressione `Win+Shift+S`; em *Mapeado para*, escolha o atalho ativo do ScreenSnap (ex.: `PrtSc` ou `Ctrl+Shift+S`) e salve em **OK**. Mantém `Win+S` (Pesquisa) intacto.
+2. **Opção 2 — Registro do Windows (`DisabledHotkeys`):**
+   - Pressione `Win+R`, digite `regedit` e abra `HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced`.
+   - Crie (ou edite) o **Valor de Cadeia** (`REG_SZ`) `DisabledHotkeys` com o valor `S` (ou importe um `.reg` definindo `"DisabledHotkeys"="S"`).
+   - Reinicie o **Windows Explorer** (pelo Gerenciador de Tarefas) ou o PC e reabra o ScreenSnap.
+   - *Atenção:* também desativa `Win+S` (Pesquisa). Para reverter, remova o `S` de `DisabledHotkeys` e reinicie o Explorer.
+3. **Bônus — Liberar a tecla `PrtSc` (`Print Screen`):**
+   - **Windows 11**: **Configurações → Acessibilidade → Teclado** → desative *"Usar a tecla Print Screen para abrir a captura de tela"*.
+   - **Windows 10**: **Configurações → Facilidade de Acesso → Teclado** → desative *"Usar o botão PrtScn para abrir a captura de tela"*.
+4. **Script pronto (pelo app, duplo clique ou PowerShell — reversível e sem admin):**
+   - No próprio Launcher do app no Windows, abra **Personalizar atalhos** e clique em **Executar script (Liberar / Restaurar Win+Shift+S)** — ou execute manualmente `desktop/scripts/windows/Liberar-WinShiftS.bat` / `toggle-win-shift-s.ps1` (`-Action Status`, `Enable`, `Restore`, `-IncludePrintScreen`, `-RestartExplorer` e `-WhatIf`).
 
 </details>
 
@@ -139,5 +163,7 @@ O ScreenSnap não coleta dados, não faz requisições externas e armazena as fa
 │   ├── capture-store.js          # Persistência temporária em IndexedDB
 │   ├── pdf-builder.js            # Gerador PDF 1.4 puro em JavaScript
 │   └── filename.js               # Sanitização de nomes de arquivos para download
-└── icons/                        # Ícones PNG (16, 32, 48 e 128 px)
+├── icons/                        # Ícones PNG (16, 32, 48 e 128 px)
+├── desktop/                      # Aplicativo desktop multiplataforma (Electron)
+└── .github/workflows/release.yml # Build e publicação automática em GitHub Releases
 ```

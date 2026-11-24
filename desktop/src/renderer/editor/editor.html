@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self'" />
+  <title>ScreenSnap — Editor</title>
+  <link rel="stylesheet" href="../../shared/theme.css" />
+  <link rel="stylesheet" href="editor.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-left">
+      <img src="../../../assets/icon-32.png" alt="ScreenSnap" class="logo" />
+      <div class="meta">
+        <strong>ScreenSnap Editor</strong>
+        <span id="infoLabel" class="info-pill">Carregando...</span>
+      </div>
+      <button id="btnNewCapture" class="export-btn secondary btn-new-capture" type="button" title="Abrir janela de captura">
+        Nova captura
+      </button>
+      <span id="warningPill" class="warning-pill hidden"></span>
+    </div>
+
+    <div class="toolbar" role="toolbar" aria-label="Ferramentas de edição">
+      <button class="tool-btn active" type="button" data-tool="pan" title="Mover / Rolar (V)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"/></svg>
+        <span>Mover</span>
+      </button>
+      <button class="tool-btn" type="button" data-tool="crop" title="Recortar (C)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 2v14a2 2 0 0 0 2 2h14M18 22V8a2 2 0 0 0-2-2H2"/></svg>
+        <span>Recortar</span>
+      </button>
+      <button class="tool-btn" type="button" data-tool="rect" title="Retângulo (R)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="1.5"/></svg>
+        <span>Retângulo</span>
+      </button>
+      <button class="tool-btn" type="button" data-tool="arrow" title="Seta (A)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M9 5h10v10"/></svg>
+        <span>Seta</span>
+      </button>
+      <button class="tool-btn" type="button" data-tool="pen" title="Desenho livre (P)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>
+        <span>Pincel</span>
+      </button>
+      <button class="tool-btn" type="button" data-tool="text" title="Texto (T)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+        <span>Texto</span>
+      </button>
+      <button class="tool-btn" type="button" data-tool="blur" title="Ofuscar / Blur (B)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+        <span>Blur</span>
+      </button>
+
+      <div class="divider"></div>
+
+      <div class="swatches" title="Cor da anotação">
+        <button class="swatch active" type="button" data-color="#ef4444" style="background:#ef4444" aria-label="Vermelho"></button>
+        <button class="swatch" type="button" data-color="#f59e0b" style="background:#f59e0b" aria-label="Âmbar"></button>
+        <button class="swatch" type="button" data-color="#A4C639" style="background:#A4C639" aria-label="Citron"></button>
+        <button class="swatch" type="button" data-color="#3b82f6" style="background:#3b82f6" aria-label="Azul"></button>
+        <button class="swatch" type="button" data-color="#8b5cf6" style="background:#8b5cf6" aria-label="Violeta"></button>
+        <button class="swatch" type="button" data-color="#151C08" style="background:#151C08" aria-label="Musgo escuro"></button>
+        <button class="swatch" type="button" data-color="#ffffff" style="background:#ffffff" aria-label="Branco"></button>
+        <input id="colorPicker" type="color" value="#ef4444" title="Cor personalizada" aria-label="Cor personalizada" />
+      </div>
+
+      <select id="strokeSelect" class="select-ctrl" title="Espessura / Tamanho" aria-label="Espessura do traço">
+        <option value="2">Fino (2px)</option>
+        <option value="4" selected>Médio (4px)</option>
+        <option value="7">Grosso (7px)</option>
+        <option value="12">Extra (12px)</option>
+      </select>
+
+      <div class="divider"></div>
+
+      <button id="btnUndo" class="icon-btn" type="button" title="Desfazer (Ctrl+Z)" aria-label="Desfazer" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>
+      </button>
+      <button id="btnRedo" class="icon-btn" type="button" title="Refazer (Ctrl+Y)" aria-label="Refazer" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14l5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></svg>
+      </button>
+    </div>
+
+    <div class="topbar-right">
+      <div class="zoom-group">
+        <button id="btnZoomOut" class="zoom-btn" type="button" title="Diminuir zoom">−</button>
+        <button id="btnZoomFit" class="zoom-label" type="button" title="Ajustar à tela">Ajustar</button>
+        <button id="btnZoomIn" class="zoom-btn" type="button" title="Aumentar zoom">+</button>
+      </div>
+
+      <button id="btnCopy" class="export-btn secondary" type="button" title="Copiar para área de transferência (Ctrl+C)">Copiar</button>
+      <button id="btnPng" class="export-btn primary" type="button" title="Salvar como PNG (Ctrl+S)">PNG</button>
+      <button id="btnJpeg" class="export-btn secondary" type="button">JPEG</button>
+
+      <div class="dropdown">
+        <button id="btnPdfMenu" class="export-btn accent" type="button" aria-haspopup="true" aria-expanded="false">PDF ▾</button>
+        <div id="pdfMenu" class="dropdown-menu hidden" role="menu">
+          <button id="btnPdfSingle" class="dropdown-item" type="button" role="menuitem">Página única contínua</button>
+          <button id="btnPdfA4" class="dropdown-item" type="button" role="menuitem">Dividir em páginas A4</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="cropBar" class="crop-bar hidden">
+    <span id="cropInfo">Selecione a área para recortar</span>
+    <button id="btnApplyCrop" class="export-btn primary" type="button">Aplicar recorte</button>
+    <button id="btnCancelCrop" class="export-btn secondary" type="button">Cancelar</button>
+  </div>
+
+  <main id="stageWrap" class="stage-wrap">
+    <div id="emptyState" class="empty-state hidden">
+      <p>Nenhuma captura carregada — clique em Nova captura</p>
+      <button id="btnEmptyNewCapture" class="export-btn primary" type="button">Nova captura</button>
+    </div>
+
+    <div id="canvasShell" class="canvas-shell hidden">
+      <canvas id="stageCanvas"></canvas>
+      <input id="floatingTextInput" class="floating-text hidden" type="text" placeholder="Digite e pressione Enter..." />
+    </div>
+  </main>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <script type="module" src="editor.js"></script>
+</body>
+</html>

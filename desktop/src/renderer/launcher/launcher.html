@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self'" />
+  <title>ScreenSnap</title>
+  <link rel="stylesheet" href="../../shared/theme.css" />
+  <link rel="stylesheet" href="launcher.css" />
+</head>
+<body>
+  <header class="titlebar">
+    <div class="brand">
+      <img src="../../../assets/icon-32.png" alt="ScreenSnap" class="logo" />
+      <div class="brand-text">
+        <div class="brand-title-row">
+          <h1>ScreenSnap</h1>
+          <span id="versionPill" class="version-pill">v1.1.0</span>
+        </div>
+        <p id="statusSubtitle" class="subtitle">Pronto para capturar</p>
+      </div>
+    </div>
+
+    <div class="window-controls">
+      <button id="btnMinimize" class="win-btn" type="button" title="Minimizar para bandeja" aria-label="Minimizar para bandeja">_</button>
+      <button id="btnClose" class="win-btn win-btn--close" type="button" title="Fechar para bandeja" aria-label="Fechar janela">×</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div id="errorBanner" class="error-banner hidden" role="alert"></div>
+
+    <div id="countdownBanner" class="countdown-banner hidden" role="status" aria-live="polite">
+      <span class="countdown-dot" aria-hidden="true"></span>
+      <span id="countdownText" class="countdown-text">Capturando em</span>
+      <span id="countdownValue" class="countdown-value">3s</span>
+    </div>
+
+    <main class="actions">
+      <button id="btnRegion" class="action-btn" type="button" data-mode="region">
+        <span class="icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 3a2 2 0 0 0-2 2v2M19 3a2 2 0 0 1 2 2v2M5 21a2 2 0 0 1-2-2v-2M19 21a2 2 0 0 0 2-2v-2"/>
+            <rect x="7" y="7" width="10" height="10" rx="1" stroke-dasharray="3 2"/>
+          </svg>
+        </span>
+        <span class="text-wrap">
+          <strong>Capturar tela</strong>
+          <small>Escolha um pedaço ou a tela inteira</small>
+        </span>
+        <kbd id="kbdRegion">PrtSc</kbd>
+      </button>
+
+      <div class="action-group">
+        <button id="btnScreen" class="action-btn" type="button" data-mode="screen">
+          <span class="icon-wrap" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <path d="M8 21h8M12 17v4"/>
+            </svg>
+          </span>
+          <span class="text-wrap">
+            <strong>Tela inteira</strong>
+            <small>Captura direta do monitor selecionado</small>
+          </span>
+          <kbd id="kbdScreen">Ctrl+Shift+1</kbd>
+        </button>
+
+        <div id="displayRow" class="display-row">
+          <label class="display-label" for="displaySelect">Monitor:</label>
+          <select id="displaySelect" class="display-select" aria-label="Selecionar monitor"></select>
+        </div>
+      </div>
+
+      <div class="action-group">
+        <button id="btnWindow" class="action-btn" type="button" data-mode="window" aria-expanded="false" aria-controls="windowPicker">
+          <span class="icon-wrap" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="5" width="15" height="13" rx="2"/>
+              <path d="M3 9h15"/>
+              <path d="M8 18v1a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-1"/>
+            </svg>
+          </span>
+          <span class="text-wrap">
+            <strong>Capturar janela</strong>
+            <small>Escolha uma janela aberta</small>
+          </span>
+          <kbd id="kbdWindow">Ctrl+Shift+3</kbd>
+        </button>
+
+        <section id="windowPicker" class="window-picker hidden" aria-label="Selecionar janela para captura">
+          <div class="window-picker-header">
+            <span class="window-picker-title">Janelas abertas</span>
+            <button id="btnRefreshWindows" class="refresh-btn" type="button" title="Atualizar lista de janelas">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 12a9 9 0 1 1-2.64-6.36"/>
+                <polyline points="21 3 21 9 15 9"/>
+              </svg>
+              <span>Atualizar</span>
+            </button>
+          </div>
+          <div id="windowList" class="window-list" role="list"></div>
+        </section>
+      </div>
+    </main>
+
+    <section class="settings" aria-label="Configurações">
+      <div class="gost-card">
+        <label class="gost-header" for="toggleGost">
+          <span class="gost-title-wrap">
+            <strong class="gost-title">Modo Gost</strong>
+            <small class="gost-subtitle">Ícone flutuante transparente na tela</small>
+          </span>
+          <span class="switch">
+            <input id="toggleGost" class="switch-input" type="checkbox" />
+            <span class="switch-track" aria-hidden="true"></span>
+          </span>
+        </label>
+
+        <div id="gostOpacityRow" class="gost-opacity-row is-disabled">
+          <label class="gost-opacity-label" for="gostOpacitySlider">Opacidade parado</label>
+          <input
+            id="gostOpacitySlider"
+            class="gost-slider"
+            type="range"
+            min="15"
+            max="85"
+            step="5"
+            value="30"
+            disabled
+          />
+          <span id="gostOpacityValue" class="gost-opacity-value">30%</span>
+        </div>
+      </div>
+
+      <div class="delay-row" aria-label="Atraso antes da captura">
+        <span class="delay-label">Atraso:</span>
+        <div class="delay-pills" role="group">
+          <button class="delay-pill active" type="button" data-delay="0">0s</button>
+          <button class="delay-pill" type="button" data-delay="3">3s</button>
+          <button class="delay-pill" type="button" data-delay="5">5s</button>
+        </div>
+      </div>
+
+      <div class="tray-row">
+        <label class="tray-toggle" for="toggleTrayOnClose">
+          <span class="tray-label">Minimizar para bandeja ao fechar</span>
+          <span class="switch">
+            <input id="toggleTrayOnClose" class="switch-input" type="checkbox" checked />
+            <span class="switch-track" aria-hidden="true"></span>
+          </span>
+        </label>
+      </div>
+    </section>
+
+    <section class="shortcuts-group">
+      <button id="btnToggleShortcuts" class="shortcuts-toggle-btn" type="button" aria-expanded="false" aria-controls="shortcutsPanel">
+        <span class="shortcuts-toggle-left">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="5" width="20" height="14" rx="2"/>
+            <path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 13h.01M10 13h4M18 13h.01M8 16h8"/>
+          </svg>
+          <span>Personalizar atalhos</span>
+        </span>
+        <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+
+      <section id="shortcutsPanel" class="shortcuts-panel hidden" aria-label="Configuração de atalhos globais">
+        <div class="shortcut-list">
+          <div class="shortcut-row">
+            <span class="shortcut-name">Capturar tela (pedaço / inteira)</span>
+            <button type="button" class="shortcut-record-btn" data-action="region">PrtSc</button>
+          </div>
+          <div class="shortcut-row">
+            <span class="shortcut-name">Tela inteira (direto)</span>
+            <button type="button" class="shortcut-record-btn" data-action="screen">Ctrl+Shift+1</button>
+          </div>
+          <div class="shortcut-row">
+            <span class="shortcut-name">Capturar janela</span>
+            <button type="button" class="shortcut-record-btn" data-action="window">Ctrl+Shift+3</button>
+          </div>
+        </div>
+
+        <div class="presets-block">
+          <span class="presets-label">Atalho rápido (Capturar tela):</span>
+          <div class="preset-pills" role="group" aria-label="Presets para Área selecionada">
+            <button type="button" class="preset-pill" data-acc="PrintScreen">PrtSc</button>
+            <button type="button" class="preset-pill" data-acc="CommandOrControl+Shift+S">Ctrl+Shift+S</button>
+            <button type="button" class="preset-pill" data-acc="Alt+Shift+S">Alt+Shift+S</button>
+            <button type="button" class="preset-pill" data-acc="Super+Shift+S">Win+Shift+S</button>
+          </div>
+        </div>
+
+        <div id="winShiftStatus" class="shortcut-status hidden" role="status"></div>
+        <div id="winShiftScriptRow" class="win-shift-script-row hidden">
+          <button
+            id="btnRunWinShiftScript"
+            class="win-shift-script-btn"
+            type="button"
+            title="Abre o script interativo no terminal para liberar ou restaurar Win+Shift+S e PrtSc (sem precisar de administrador)"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="4 17 10 11 4 5"/>
+              <line x1="12" y1="19" x2="20" y2="19"/>
+            </svg>
+            <span>Executar script (Liberar / Restaurar Win+Shift+S)</span>
+          </button>
+        </div>
+        <details id="winShiftGuide" class="win-shift-guide hidden">
+          <summary class="win-shift-guide-summary">Como liberar Win+Shift+S no Windows?</summary>
+          <div class="win-shift-guide-body">
+            <div class="win-shift-guide-section">
+              <strong>Opção 1 — Microsoft PowerToys (recomendado, sem mexer no Registro)</strong>
+              <ol>
+                <li>Instale o <strong>Microsoft PowerToys</strong> (Microsoft Store) e abra <strong>Gerenciador de Teclado</strong> (<em>Keyboard Manager</em>).</li>
+                <li>Ative o recurso e clique em <strong>Remapear um atalho</strong> → <strong>Adicionar</strong>.</li>
+                <li>Em <em>Atalho físico</em>, pressione <code>Win+Shift+S</code>; em <em>Mapeado para</em>, escolha o atalho do ScreenSnap (ex.: <code>PrtSc</code> ou <code>Ctrl+Shift+S</code>). Assim o <code>Win+S</code> (Pesquisa) continua ativo.</li>
+              </ol>
+            </div>
+
+            <div class="win-shift-guide-section">
+              <strong>Opção 2 — Registro do Windows (<code>DisabledHotkeys</code>)</strong>
+              <ol>
+                <li>Pressione <code>Win+R</code>, digite <code>regedit</code> e aperte <code>Enter</code>.</li>
+                <li>Navegue até o caminho:</li>
+              </ol>
+              <div class="win-shift-reg-row">
+                <code class="win-shift-reg-path" id="winShiftRegPath">HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced</code>
+                <button id="btnCopyRegPath" class="win-shift-copy-btn" type="button">Copiar</button>
+              </div>
+              <ol start="3">
+                <li>Crie (ou edite) um <strong>Valor de Cadeia</strong> (<code>REG_SZ</code>) chamado <code>DisabledHotkeys</code> com o valor <code>S</code>.</li>
+                <li>Reinicie o <strong>Windows Explorer</strong> (no Gerenciador de Tarefas) ou o PC e reabra o ScreenSnap.</li>
+              </ol>
+              <p class="win-shift-guide-note">Também desativa <code>Win+S</code> (Pesquisa). Para reverter, remova o <code>S</code> de <code>DisabledHotkeys</code> e reinicie o Explorer.</p>
+            </div>
+
+            <div class="win-shift-guide-section">
+              <strong>Dica — Liberar a tecla <code>PrtSc</code> (Print Screen)</strong>
+              <p>Em <strong>Configurações → Acessibilidade → Teclado</strong>, desative <em>"Usar a tecla Print Screen para abrir a captura de tela"</em>.</p>
+            </div>
+          </div>
+        </details>
+        <div id="shortcutFeedback" class="shortcut-feedback hidden" role="status" aria-live="polite"></div>
+
+        <div class="shortcuts-panel-footer">
+          <span class="shortcut-hint">Clique em um atalho e pressione a tecla desejada</span>
+          <button id="btnResetShortcuts" class="reset-shortcuts-btn" type="button">Restaurar padrão</button>
+        </div>
+      </section>
+    </section>
+
+    <footer class="footer">
+      <button id="btnOpenFolder" class="link-btn" type="button">Abrir pasta de capturas</button>
+      <span class="hint">Fica na bandeja do sistema</span>
+    </footer>
+  </div>
+
+  <script src="launcher.js"></script>
+</body>
+</html>
