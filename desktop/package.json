@@ -2,7 +2,15 @@
   "name": "screensnap-desktop",
   "version": "1.1.0",
   "description": "ScreenSnap Desktop — Captura de tela (região, monitor e janela) com editor leve e exportação PNG, JPEG, PDF e área de transferência.",
-  "author": "Assis",
+  "homepage": "https://github.com/evo06/Screen-Full-Page",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evo06/Screen-Full-Page.git"
+  },
+  "author": {
+    "name": "Assis",
+    "email": "evo06@users.noreply.github.com"
+  },
   "license": "MIT",
   "main": "src/main/main.js",
   "scripts": {
@@ -85,6 +93,7 @@
     "linux": {
       "icon": "build/icon.png",
       "category": "Utility;Graphics",
+      "maintainer": "Assis <evo06@users.noreply.github.com>",
       "target": [
         "AppImage",
         "deb"

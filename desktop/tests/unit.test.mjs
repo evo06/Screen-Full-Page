@@ -300,6 +300,18 @@ test("package.json bundles Windows Win+Shift+S scripts via extraResources", () =
   }
 });
 
+test("package.json specifies homepage and maintainer email for Linux deb builds", () => {
+  const pkgPath = path.join(ROOT_DIR, "package.json");
+  const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
+
+  assert.match(String(pkg.homepage || ""), /^https?:\/\//, "homepage must be a valid URL");
+  assert.ok(
+    String(pkg.author?.email || "").includes("@") ||
+      String(pkg.build?.linux?.maintainer || "").includes("@"),
+    "author.email or build.linux.maintainer must contain an email address for FpmTarget deb builds"
+  );
+});
+
 test("src/shared/theme.css preserves Zagid tokens and defines --ds-mesh-launcher", () => {
   const themePath = path.join(ROOT_DIR, "src/shared/theme.css");
   const css = fs.readFileSync(themePath, "utf8");
