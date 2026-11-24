@@ -38,7 +38,17 @@ const isSmokeTest = process.argv.includes("--smoke-test");
 const isHiddenAutoStartArg = process.argv.includes("--hidden");
 
 function isAutoStartSupported() {
-  return process.platform === "win32" || process.platform === "darwin";
+  return (
+    process.platform === "win32" ||
+    process.platform === "darwin" ||
+    process.platform === "linux"
+  );
+}
+
+function getAutoStartMenuLabel() {
+  if (process.platform === "darwin") return "Iniciar com o macOS";
+  if (process.platform === "linux") return "Iniciar com o Linux";
+  return "Iniciar com o Windows";
 }
 
 function syncLoginItemSetting(enabled) {
@@ -58,6 +68,9 @@ function syncLoginItemSetting(enabled) {
         openAtLogin: Boolean(enabled),
         openAsHidden: true,
       });
+    } else if (process.platform === "linux") {
+      const linuxExecPath = process.env.APPIMAGE || process.execPath;
+      settingsStore.syncLinuxAutostartFile(Boolean(enabled), linuxExecPath);
     }
   } catch {
     // Ignore OS policy restrictions on startup items
@@ -457,7 +470,7 @@ function createOrShowLauncher() {
     minWidth: 400,
     minHeight: 540,
     frame: false,
-    titleBarStyle: "hidden",
+    ...(process.platform === "darwin" ? {} : { titleBarStyle: "hidden" }),
     backgroundColor: "#151C08",
     icon: getAppIconPath(),
     show: false,
@@ -786,7 +799,7 @@ function buildTrayTemplate(includeAccelerators) {
     ...(isAutoStartSupported()
       ? [
           {
-            label: process.platform === "darwin" ? "Iniciar com o macOS" : "Iniciar com o Windows",
+            label: getAutoStartMenuLabel(),
             type: "checkbox",
             checked: Boolean(currentSettings.launchAtLogin),
             click: (menuItem) => {
@@ -830,9 +843,12 @@ function createTray() {
     return tray;
   }
 
-  const trayImg = fs.existsSync(TRAY_ICON_PATH)
+  let trayImg = fs.existsSync(TRAY_ICON_PATH)
     ? nativeImage.createFromPath(TRAY_ICON_PATH)
     : nativeImage.createEmpty();
+  if (process.platform === "darwin" && !trayImg.isEmpty()) {
+    trayImg = trayImg.resize({ width: 18, height: 18 });
+  }
 
   try {
     tray = new Tray(trayImg);

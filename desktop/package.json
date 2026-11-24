@@ -1,6 +1,6 @@
 {
   "name": "screensnap-desktop",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "ScreenSnap Desktop — Captura de tela (região, monitor e janela) com editor leve e exportação PNG, JPEG, PDF e área de transferência.",
   "homepage": "https://github.com/evo06/Screen-Full-Page",
   "repository": {
@@ -83,8 +83,20 @@
       "icon": "build/icon.png",
       "category": "public.app-category.productivity",
       "target": [
-        "dmg",
-        "zip"
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
       ],
       "artifactName": "ScreenSnap-${version}-mac-${arch}.${ext}",
       "extendInfo": {

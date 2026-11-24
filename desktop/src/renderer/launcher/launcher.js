@@ -688,11 +688,17 @@
       applyShortcutsUI(state?.shortcuts || {}, currentPlatform);
       if (launchAtLoginLabel) {
         launchAtLoginLabel.textContent =
-          currentPlatform === "darwin" ? "Iniciar com o macOS" : "Iniciar com o Windows";
+          currentPlatform === "darwin"
+            ? "Iniciar com o macOS"
+            : currentPlatform === "linux"
+              ? "Iniciar com o Linux"
+              : "Iniciar com o Windows";
       }
       launchAtLoginRow?.classList.toggle(
         "hidden",
-        currentPlatform !== "win32" && currentPlatform !== "darwin"
+        currentPlatform !== "win32" &&
+          currentPlatform !== "darwin" &&
+          currentPlatform !== "linux"
       );
 
       const settings = state?.settings || {};

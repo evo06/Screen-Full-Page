@@ -26,6 +26,9 @@ const {
   loadSettings,
   saveSettings,
   updateSettings,
+  getLinuxAutostartPath,
+  buildLinuxAutostartDesktopEntry,
+  syncLinuxAutostartFile,
 } = require("../src/main/settings.js");
 
 const __filename = fileURLToPath(import.meta.url);
@@ -484,6 +487,50 @@ test("launchAtLogin defaults, sanitization, and persistence", () => {
     assert.equal(loadSettings(tmpDir).launchAtLogin, true);
   } finally {
     fs.rmSync(tmpDir, { recursive: true, force: true });
+  }
+});
+
+test("package.json configures macOS (arm64 + x64) and Linux (AppImage + deb) targets", () => {
+  const pkgPath = path.join(ROOT_DIR, "package.json");
+  const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
+
+  const macTargets = pkg.build?.mac?.target;
+  assert.ok(Array.isArray(macTargets), "build.mac.target must be an array");
+  for (const targetName of ["dmg", "zip"]) {
+    const entry = macTargets.find((item) => item?.target === targetName);
+    assert.ok(entry, `build.mac.target must include ${targetName}`);
+    assert.deepEqual(entry.arch, ["arm64", "x64"], `${targetName} must target arm64 and x64`);
+  }
+
+  const linuxTargets = pkg.build?.linux?.target;
+  assert.ok(Array.isArray(linuxTargets), "build.linux.target must be an array");
+  assert.ok(linuxTargets.includes("AppImage"), "build.linux.target must include AppImage");
+  assert.ok(linuxTargets.includes("deb"), "build.linux.target must include deb");
+});
+
+test("Linux XDG autostart helpers build, write, and clean up screensnap.desktop safely", () => {
+  const tmpConfigHome = fs.mkdtempSync(path.join(os.tmpdir(), "screensnap-xdg-test-"));
+  try {
+    const expectedPath = path.join(tmpConfigHome, "autostart", "screensnap.desktop");
+    assert.equal(getLinuxAutostartPath(tmpConfigHome), expectedPath);
+
+    const execWithSpaces = "/opt/Screen Snap/ScreenSnap.AppImage";
+    const entry = buildLinuxAutostartDesktopEntry(execWithSpaces);
+    assert.ok(entry.includes("[Desktop Entry]"));
+    assert.ok(entry.includes('Exec="/opt/Screen Snap/ScreenSnap.AppImage" --hidden'));
+    assert.ok(entry.includes("X-GNOME-Autostart-enabled=true"));
+
+    const enabledRes = syncLinuxAutostartFile(true, execWithSpaces, tmpConfigHome);
+    assert.equal(enabledRes.path, expectedPath);
+    assert.equal(enabledRes.enabled, true);
+    assert.ok(fs.existsSync(expectedPath));
+    assert.equal(fs.readFileSync(expectedPath, "utf8"), entry);
+
+    const disabledRes = syncLinuxAutostartFile(false, execWithSpaces, tmpConfigHome);
+    assert.equal(disabledRes.enabled, false);
+    assert.equal(fs.existsSync(expectedPath), false);
+  } finally {
+    fs.rmSync(tmpConfigHome, { recursive: true, force: true });
   }
 });
 

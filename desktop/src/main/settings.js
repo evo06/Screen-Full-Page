@@ -1,6 +1,7 @@
 "use strict";
 
 const fs = require("fs");
+const os = require("os");
 const path = require("path");
 
 const MODIFIER_ALIASES = Object.freeze({
@@ -364,6 +365,52 @@ function getDefaultCapturesDir(picturesDir) {
   return capturesDir;
 }
 
+/**
+ * Resolve XDG autostart .desktop file path for Linux desktop sessions.
+ */
+function getLinuxAutostartPath(configHome) {
+  const baseConfig =
+    configHome || process.env.XDG_CONFIG_HOME || path.join(os.homedir(), ".config");
+  return path.join(baseConfig, "autostart", "screensnap.desktop");
+}
+
+/**
+ * Build FreeDesktop XDG autostart .desktop entry launching ScreenSnap hidden in tray.
+ */
+function buildLinuxAutostartDesktopEntry(execPath) {
+  const rawExec = String(execPath || "screensnap").trim() || "screensnap";
+  const escapedExec = rawExec.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+  return [
+    "[Desktop Entry]",
+    "Type=Application",
+    "Version=1.0",
+    "Name=ScreenSnap",
+    "Comment=Captura de tela, Modo Gost e editor leve",
+    `Exec="${escapedExec}" --hidden`,
+    "Terminal=false",
+    "Categories=Utility;Graphics;",
+    "X-GNOME-Autostart-enabled=true",
+    "",
+  ].join("\n");
+}
+
+/**
+ * Create or remove the Linux XDG autostart desktop entry cleanly.
+ */
+function syncLinuxAutostartFile(enabled, execPath, configHome) {
+  const desktopFilePath = getLinuxAutostartPath(configHome);
+  if (enabled) {
+    fs.mkdirSync(path.dirname(desktopFilePath), { recursive: true });
+    fs.writeFileSync(desktopFilePath, buildLinuxAutostartDesktopEntry(execPath), "utf8");
+  } else {
+    fs.rmSync(desktopFilePath, { force: true });
+  }
+  return {
+    path: desktopFilePath,
+    enabled: Boolean(enabled),
+  };
+}
+
 module.exports = {
   DEFAULT_SETTINGS,
   MIN_GOST_OPACITY,
@@ -376,4 +423,7 @@ module.exports = {
   saveSettings,
   updateSettings,
   getDefaultCapturesDir,
+  getLinuxAutostartPath,
+  buildLinuxAutostartDesktopEntry,
+  syncLinuxAutostartFile,
 };
