@@ -69,26 +69,50 @@ Todo o processamento acontece localmente no navegador — sem servidores externo
 
 ## Aplicativo Desktop (Windows, macOS e Linux)
 
-Além da extensão para navegador, o **ScreenSnap Desktop** (Electron) permite capturar com escolha imediata entre **um pedaço da tela (*freeze-frame*)** ou a **tela inteira** (multi-monitor e janelas específicas), com atalhos globais configuráveis (`PrtSc` como padrão no Windows/Linux, suporte automático a `Win+Shift+S` quando livre), **Modo Gost** (botão flutuante discreto `48×48` em janela `64×64`, sempre no topo sem roubar foco, semi-transparente parado — padrão `30%`, ajustável entre `15%` e `85%` — que acende ao passar o mouse, oculta-se antes do print, abre o seletor **Pedaço** / **Tela inteira** ao clicar, é arrastável com posição persistida e traz menu rápido no clique direito além de controles no Launcher e na Bandeja do sistema), inicialização automática com o Windows (**Iniciar com o Windows**, abrindo silenciosamente na bandeja `^`, configurável no Launcher e na Bandeja), editor leve (que fecha automaticamente após copiar ou salvar em **PNG**, **JPEG** ou **PDF**).
+Além da extensão para navegador, o **ScreenSnap Desktop** (Electron) permite capturar com escolha imediata entre **um pedaço da tela (*freeze-frame*)** ou a **tela inteira** (multi-monitor e janelas específicas), com atalhos globais configuráveis (`PrtSc` como padrão no Windows/Linux, `Cmd+Shift+S` no macOS e suporte automático a `Win+Shift+S` quando livre), **Modo Gost** (botão flutuante discreto `48×48` em janela `64×64`, sempre no topo sem roubar foco, semi-transparente parado — padrão `30%`, ajustável entre `15%` e `85%` — que acende ao passar o mouse, oculta-se antes do print, abre o seletor **Pedaço** / **Tela inteira** ao clicar, é arrastável com posição persistida e traz menu rápido no clique direito além de controles no Launcher e na Bandeja do sistema), inicialização automática com o sistema (**Windows**, **macOS** e **Linux** via XDG autostart, abrindo silenciosamente na bandeja), editor leve (que fecha automaticamente após copiar ou salvar em **PNG**, **JPEG** ou **PDF**).
 
-Os instaladores são distribuídos via **[GitHub Releases](https://github.com/evo06/Screen-Full-Page/releases/latest)**:
+Os instaladores para **Windows**, **macOS** e **Linux** são distribuídos via **[GitHub Releases](https://github.com/evo06/Screen-Full-Page/releases/latest)**:
 
 | Plataforma | Arquivo / Formato | Tamanho | Download |
 | --- | --- | --- | --- |
-| **Windows (x64)** | Instalador NSIS (`ScreenSnap-Setup-1.1.2-x64.exe`) | `87,49 MB` | [Baixar Instalador](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Setup-1.1.2-x64.exe) |
-| **Windows (x64)** | Portátil (`ScreenSnap-Portable-1.1.2-x64.exe`) | `80,34 MB` | [Baixar Portátil](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Portable-1.1.2-x64.exe) |
-| **macOS** | `.dmg` / `.zip` | — | [Ver na Release](https://github.com/evo06/Screen-Full-Page/releases/latest) |
-| **Linux** | `.AppImage` / `.deb` | — | [Ver na Release](https://github.com/evo06/Screen-Full-Page/releases/latest) |
+| **Windows (x64)** | Instalador NSIS (`ScreenSnap-Setup-1.2.0-x64.exe`) | `87,49 MB` | [Baixar Instalador](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Setup-1.2.0-x64.exe) |
+| **Windows (x64)** | Portátil (`ScreenSnap-Portable-1.2.0-x64.exe`) | `80,34 MB` | [Baixar Portátil](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Portable-1.2.0-x64.exe) |
+| **macOS (Apple Silicon — M1–M4)** | Instalador `.dmg` (`ScreenSnap-1.2.0-mac-arm64.dmg`) | `102,60 MB` | [Baixar macOS ARM64 (.dmg)](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-1.2.0-mac-arm64.dmg) |
+| **macOS (Apple Silicon — M1–M4)** | Compactado `.zip` (`ScreenSnap-1.2.0-mac-arm64.zip`) | `98,86 MB` | [Baixar macOS ARM64 (.zip)](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-1.2.0-mac-arm64.zip) |
+| **macOS (Intel x64)** | Instalador `.dmg` (`ScreenSnap-1.2.0-mac-x64.dmg`) | `106,80 MB` | [Baixar macOS Intel (.dmg)](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-1.2.0-mac-x64.dmg) |
+| **macOS (Intel x64)** | Compactado `.zip` (`ScreenSnap-1.2.0-mac-x64.zip`) | `103,06 MB` | [Baixar macOS Intel (.zip)](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-1.2.0-mac-x64.zip) |
+| **Linux (x64)** | Portátil `.AppImage` (`ScreenSnap-1.2.0-linux-x86_64.AppImage`) | `107,50 MB` | [Baixar Linux AppImage](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-1.2.0-linux-x86_64.AppImage) |
+| **Linux (x64 — Debian / Ubuntu)** | Pacote `.deb` (`ScreenSnap-1.2.0-linux-amd64.deb`) | `84,68 MB` | [Baixar Linux .deb](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-1.2.0-linux-amd64.deb) |
 
 <details>
-<summary>Checksums SHA-256 (Windows x64 v1.1.2)</summary>
+<summary>Checksums SHA-256 (Windows, macOS e Linux — Release v1.2.0)</summary>
 
 ```text
-980F89D6909ABF7A73C012D33D7157B36FF5E284888B93384189BDE52CAFE8C3  ScreenSnap-Setup-1.1.2-x64.exe
-91BDB731B083DA16677DE2A175790E4C66EF49A608322E891F934C7FDFC51140  ScreenSnap-Portable-1.1.2-x64.exe
+5d20ef90fc580c6b0deefb609f08f5e1f668a6124278995ca00dfde0254daa57  ScreenSnap-Setup-1.2.0-x64.exe
+72838243d7b52c2af71afcece5dfc56dee40ea1408f65426f1a56e18b6bbbdff  ScreenSnap-Portable-1.2.0-x64.exe
+e5442f8068993bf3319fc5b91bc3378a666fc4d3adc04984638bf10252d41198  ScreenSnap-1.2.0-mac-arm64.dmg
+30f2cfeb4b46d7c347a648f0cdeaf7c8726804269b2dd73dde1dd854fb8197bc  ScreenSnap-1.2.0-mac-arm64.zip
+9cd10f8371a9d794ef62ecb2f796d38261f2e3918da1be02a329c149c5678624  ScreenSnap-1.2.0-mac-x64.dmg
+78c1798f4d67e4f458bcc9a73a980014f662bdcbdd14c584ce4fb3b87327c696  ScreenSnap-1.2.0-mac-x64.zip
+9bebf3c54b85873bd045e5958009b2435ae96817a097aca795cbe777618e82e3  ScreenSnap-1.2.0-linux-x86_64.AppImage
+d562d00b4c08969e51879ce9db03148d7dfc837774eaa3532e645a470d1846c2  ScreenSnap-1.2.0-linux-amd64.deb
 ```
 
-*(As releases publicadas via GitHub Actions também anexam `SHA256SUMS.txt` com os hashes de todas as plataformas — Windows, macOS e Linux.)*
+Arquivo completo disponível em [`SHA256SUMS.txt`](https://github.com/evo06/Screen-Full-Page/releases/latest/download/SHA256SUMS.txt).
+
+</details>
+
+<details>
+<summary>Como instalar no macOS e Linux</summary>
+
+- **macOS (`arm64` Apple Silicon / `x64` Intel):**
+  1. Abra o `.dmg` correspondente e arraste **ScreenSnap.app** para **Aplicativos** (*Applications*).
+  2. Como o app não possui assinatura Apple Developer ID, na primeira execução clique com o botão direito → **Abrir** (ou execute `xattr -cr /Applications/ScreenSnap.app` no Terminal).
+  3. Autorize **Gravação de Tela** (*Ajustes do Sistema → Privacidade e Segurança → Gravação de Tela*) para capturar regiões, janelas e monitores.
+- **Linux (`AppImage` / `.deb`):**
+  - **Debian / Ubuntu (`amd64`)**: `sudo apt install ./ScreenSnap-1.2.0-linux-amd64.deb`
+  - **Portátil `.AppImage` (`x86_64`)**: `chmod +x ScreenSnap-1.2.0-linux-x86_64.AppImage && ./ScreenSnap-1.2.0-linux-x86_64.AppImage`
+  - A opção **Iniciar com o Linux** gerencia automaticamente `~/.config/autostart/screensnap.desktop` (`--hidden`).
 
 </details>
 

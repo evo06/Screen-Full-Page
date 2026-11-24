@@ -10,23 +10,41 @@ Os instaladores oficiais são distribuídos via **[GitHub Releases](https://gith
 
 | Plataforma | Formato / Arquivo | Tamanho | Download |
 | --- | --- | --- | --- |
-| **Windows (x64)** | Instalador NSIS (`ScreenSnap-Setup-1.1.2-x64.exe`) | `87,49 MB` | [Baixar Instalador](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Setup-1.1.2-x64.exe) |
-| **Windows (x64)** | Portátil sem instalação (`ScreenSnap-Portable-1.1.2-x64.exe`) | `80,34 MB` | [Baixar Portátil](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Portable-1.1.2-x64.exe) |
-| **macOS** | `.dmg` / `.zip` | — | [Ver na Release](https://github.com/evo06/Screen-Full-Page/releases/latest) |
-| **Linux** | `.AppImage` / `.deb` | — | [Ver na Release](https://github.com/evo06/Screen-Full-Page/releases/latest) |
+| **Windows (x64)** | Instalador NSIS (`ScreenSnap-Setup-1.2.0-x64.exe`) | `87,49 MB` | [Baixar Instalador](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Setup-1.2.0-x64.exe) |
+| **Windows (x64)** | Portátil sem instalação (`ScreenSnap-Portable-1.2.0-x64.exe`) | `80,34 MB` | [Baixar Portátil](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Portable-1.2.0-x64.exe) |
+| **macOS (Apple Silicon — M1/M2/M3/M4)** | Instalador `.dmg` (`ScreenSnap-1.2.0-mac-arm64.dmg`) | `102,60 MB` | [Baixar macOS ARM64 (.dmg)](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-1.2.0-mac-arm64.dmg) |
+| **macOS (Apple Silicon — M1/M2/M3/M4)** | Compactado `.zip` (`ScreenSnap-1.2.0-mac-arm64.zip`) | `98,86 MB` | [Baixar macOS ARM64 (.zip)](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-1.2.0-mac-arm64.zip) |
+| **macOS (Intel x64)** | Instalador `.dmg` (`ScreenSnap-1.2.0-mac-x64.dmg`) | `106,80 MB` | [Baixar macOS Intel (.dmg)](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-1.2.0-mac-x64.dmg) |
+| **macOS (Intel x64)** | Compactado `.zip` (`ScreenSnap-1.2.0-mac-x64.zip`) | `103,06 MB` | [Baixar macOS Intel (.zip)](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-1.2.0-mac-x64.zip) |
+| **Linux (x64)** | Portátil `.AppImage` (`ScreenSnap-1.2.0-linux-x86_64.AppImage`) | `107,50 MB` | [Baixar Linux AppImage](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-1.2.0-linux-x86_64.AppImage) |
+| **Linux (x64 — Debian / Ubuntu)** | Pacote `.deb` (`ScreenSnap-1.2.0-linux-amd64.deb`) | `84,68 MB` | [Baixar Linux .deb](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-1.2.0-linux-amd64.deb) |
 
 <details>
-<summary>Verificar integridade (SHA-256 — Windows x64 v1.1.2)</summary>
+<summary>Verificar integridade (SHA-256 — Release v1.2.0)</summary>
 
 ```text
-980F89D6909ABF7A73C012D33D7157B36FF5E284888B93384189BDE52CAFE8C3  ScreenSnap-Setup-1.1.2-x64.exe
-91BDB731B083DA16677DE2A175790E4C66EF49A608322E891F934C7FDFC51140  ScreenSnap-Portable-1.1.2-x64.exe
+5d20ef90fc580c6b0deefb609f08f5e1f668a6124278995ca00dfde0254daa57  ScreenSnap-Setup-1.2.0-x64.exe
+72838243d7b52c2af71afcece5dfc56dee40ea1408f65426f1a56e18b6bbbdff  ScreenSnap-Portable-1.2.0-x64.exe
+e5442f8068993bf3319fc5b91bc3378a666fc4d3adc04984638bf10252d41198  ScreenSnap-1.2.0-mac-arm64.dmg
+30f2cfeb4b46d7c347a648f0cdeaf7c8726804269b2dd73dde1dd854fb8197bc  ScreenSnap-1.2.0-mac-arm64.zip
+9cd10f8371a9d794ef62ecb2f796d38261f2e3918da1be02a329c149c5678624  ScreenSnap-1.2.0-mac-x64.dmg
+78c1798f4d67e4f458bcc9a73a980014f662bdcbdd14c584ce4fb3b87327c696  ScreenSnap-1.2.0-mac-x64.zip
+9bebf3c54b85873bd045e5958009b2435ae96817a097aca795cbe777618e82e3  ScreenSnap-1.2.0-linux-x86_64.AppImage
+d562d00b4c08969e51879ce9db03148d7dfc837774eaa3532e645a470d1846c2  ScreenSnap-1.2.0-linux-amd64.deb
 ```
 
-No PowerShell:
+Também disponível diretamente em [`SHA256SUMS.txt`](https://github.com/evo06/Screen-Full-Page/releases/latest/download/SHA256SUMS.txt).
+
+No PowerShell (Windows):
 ```powershell
-Get-FileHash .\ScreenSnap-Setup-1.1.2-x64.exe -Algorithm SHA256
-Get-FileHash .\ScreenSnap-Portable-1.1.2-x64.exe -Algorithm SHA256
+Get-FileHash .\ScreenSnap-Setup-1.2.0-x64.exe -Algorithm SHA256
+Get-FileHash .\ScreenSnap-Portable-1.2.0-x64.exe -Algorithm SHA256
+```
+
+No terminal (macOS / Linux):
+```bash
+shasum -a 256 ScreenSnap-1.2.0-mac-*.dmg   # macOS
+sha256sum ScreenSnap-1.2.0-linux-*          # Linux
 ```
 
 </details>
@@ -156,29 +174,55 @@ Se a tecla `PrtSc` ainda abrir a Ferramenta de Captura nativa em vez do ScreenSn
 
 Os artefatos gerados para Windows (x64) ficam disponíveis na pasta `dist/`:
 
-### 1. Instalador NSIS (`dist/ScreenSnap-Setup-1.1.2-x64.exe`)
-1. Execute `dist/ScreenSnap-Setup-1.1.2-x64.exe`.
+### 1. Instalador NSIS (`dist/ScreenSnap-Setup-1.2.0-x64.exe`)
+1. Execute `dist/ScreenSnap-Setup-1.2.0-x64.exe`.
 2. Siga o assistente de instalação (instalação por usuário, com opção de escolher o diretório de destino).
 3. Atalhos serão criados automaticamente no **Menu Iniciar** e na **Área de Trabalho** como **ScreenSnap**.
 
-### 2. Versão portátil (`dist/ScreenSnap-Portable-1.1.2-x64.exe`)
-1. Copie ou execute diretamente `dist/ScreenSnap-Portable-1.1.2-x64.exe` de qualquer pasta ou unidade removível.
+### 2. Versão portátil (`dist/ScreenSnap-Portable-1.2.0-x64.exe`)
+1. Copie ou execute diretamente `dist/ScreenSnap-Portable-1.2.0-x64.exe` de qualquer pasta ou unidade removível.
 2. Não requer instalação nem altera atalhos do sistema.
+
+## Instalação no macOS (`arm64` e `x64`)
+
+1. Baixe `ScreenSnap-1.2.0-mac-arm64.dmg` (Apple Silicon M1–M4) ou `ScreenSnap-1.2.0-mac-x64.dmg` (Intel).
+2. Abra o `.dmg` e arraste **ScreenSnap.app** para a pasta **Aplicativos** (*Applications*).
+3. Como o pacote ainda não possui assinatura Apple Developer ID, na primeira abertura dê **clique direito → Abrir** (ou remova o atributo de quarentena no Terminal):
+   ```bash
+   xattr -cr /Applications/ScreenSnap.app
+   ```
+4. A inicialização automática (**Iniciar com o macOS**) abre o app oculto na barra de menus e pode ser alternada pelo Launcher ou pelo ícone da barra.
+
+## Instalação no Linux (`AppImage` e `.deb`)
+
+### Opção 1 — Pacote `.deb` (Ubuntu / Debian / Mint / Pop!_OS)
+```bash
+sudo apt install ./ScreenSnap-1.2.0-linux-amd64.deb
+```
+Depois, abra **ScreenSnap** pelo menu de aplicativos ou execute `screensnap`.
+
+### Opção 2 — Portátil `.AppImage` (qualquer distribuição x64)
+```bash
+chmod +x ScreenSnap-1.2.0-linux-x86_64.AppImage
+./ScreenSnap-1.2.0-linux-x86_64.AppImage
+```
+
+> **Inicialização automática no Linux:** a opção **Iniciar com o Linux** (ativada por padrão no Launcher e na bandeja) cria automaticamente `~/.config/autostart/screensnap.desktop` executando `--hidden` ao entrar na sessão.
 
 ### Publicação no GitHub Releases
 
-Por terem ~`80–88 MB` (próximo ao limite de `100 MB` por arquivo do Git), os executáveis `.exe` **não devem ser commitados no Git** (`dist/` fica ignorado no `.gitignore`) e sim anexados em **GitHub Releases**:
+Por terem ~`80–108 MB` (próximo ao limite de `100 MB` por arquivo do Git), os instaladores **não devem ser commitados no Git** (`dist/` fica ignorado no `.gitignore`) e sim anexados em **GitHub Releases**:
 
-1. **Opção 1 — Publicação manual (Windows já compilado)**:
-   - Acesse **[New Release](https://github.com/evo06/Screen-Full-Page/releases/new)** no GitHub.
-   - Crie a tag `v1.1.2` e anexe `dist/ScreenSnap-Setup-1.1.2-x64.exe` (`87,49 MB`) e `dist/ScreenSnap-Portable-1.1.2-x64.exe` (`80,34 MB`).
-2. **Opção 2 — Publicação automática (Windows, macOS e Linux via GitHub Actions)**:
-   - Garanta que `.github/workflows/release.yml` esteja na raiz do repositório Git e envie uma tag `v*`:
+1. **Opção 1 — Publicação automática (recomendada — Windows, macOS e Linux via GitHub Actions)**:
+   - Com `.github/workflows/release.yml` na raiz do repositório Git, crie e envie uma tag `v*`:
    ```bash
-   git tag v1.1.2
-   git push origin v1.1.2
+   git tag v1.2.0
+   git push origin v1.2.0
    ```
-   - O workflow compila automaticamente os pacotes para Windows, macOS e Linux, gera `SHA256SUMS.txt` e publica a Release pública com todos os instaladores anexados.
+   - O workflow compila automaticamente os pacotes para Windows, macOS (`arm64` + `x64`) e Linux (`AppImage` + `.deb`), gera `SHA256SUMS.txt` e publica a Release pública com todos os instaladores anexados.
+2. **Opção 2 — Publicação manual (Windows compilado localmente)**:
+   - Acesse **[New Release](https://github.com/evo06/Screen-Full-Page/releases/new)** no GitHub.
+   - Crie a tag `v1.2.0` e anexe `dist/ScreenSnap-Setup-1.2.0-x64.exe` e `dist/ScreenSnap-Portable-1.2.0-x64.exe`.
 
 ---
 
