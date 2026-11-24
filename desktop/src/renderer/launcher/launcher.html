@@ -15,7 +15,7 @@
       <div class="brand-text">
         <div class="brand-title-row">
           <h1>ScreenSnap</h1>
-          <span id="versionPill" class="version-pill">v1.1.1</span>
+          <span id="versionPill" class="version-pill">v1.1.2</span>
         </div>
         <p id="statusSubtitle" class="subtitle">Pronto para capturar</p>
       </div>
@@ -147,6 +147,16 @@
           <span class="tray-label">Minimizar para bandeja ao fechar</span>
           <span class="switch">
             <input id="toggleTrayOnClose" class="switch-input" type="checkbox" checked />
+            <span class="switch-track" aria-hidden="true"></span>
+          </span>
+        </label>
+      </div>
+
+      <div id="launchAtLoginRow" class="tray-row">
+        <label class="tray-toggle" for="toggleLaunchAtLogin">
+          <span id="launchAtLoginLabel" class="tray-label">Iniciar com o Windows</span>
+          <span class="switch">
+            <input id="toggleLaunchAtLogin" class="switch-input" type="checkbox" checked />
             <span class="switch-track" aria-hidden="true"></span>
           </span>
         </label>

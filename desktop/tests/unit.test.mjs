@@ -393,6 +393,7 @@ test("saveSettings, loadSettings, and updateSettings persist and sanitize in iso
     assert.deepEqual(initial, {
       delaySeconds: 0,
       minimizeToTray: true,
+      launchAtLogin: true,
       tryWinShiftS: true,
       gostEnabled: true,
       gostIdleOpacity: 0.3,
@@ -453,12 +454,34 @@ test("saveSettings, loadSettings, and updateSettings persist and sanitize in iso
     assert.deepEqual(loadSettings(tmpDir), {
       delaySeconds: 0,
       minimizeToTray: true,
+      launchAtLogin: true,
       tryWinShiftS: true,
       gostEnabled: true,
       gostIdleOpacity: 0.3,
       gostPosition: null,
       shortcuts: getDefaultShortcuts(),
     });
+  } finally {
+    fs.rmSync(tmpDir, { recursive: true, force: true });
+  }
+});
+
+test("launchAtLogin defaults, sanitization, and persistence", () => {
+  assert.equal(DEFAULT_SETTINGS.launchAtLogin, true);
+  assert.equal(sanitizeSettings({ launchAtLogin: false }).launchAtLogin, false);
+  assert.equal(sanitizeSettings({ launchAtLogin: "yes" }).launchAtLogin, true);
+  assert.equal(sanitizeSettings({ launchAtLogin: 1 }).launchAtLogin, true);
+  assert.equal(sanitizeSettings({ launchAtLogin: null }).launchAtLogin, true);
+
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "screensnap-autostart-test-"));
+  try {
+    const saved = saveSettings({ launchAtLogin: false }, tmpDir);
+    assert.equal(saved.launchAtLogin, false);
+    assert.equal(loadSettings(tmpDir).launchAtLogin, false);
+
+    const updated = updateSettings({ launchAtLogin: true }, tmpDir);
+    assert.equal(updated.launchAtLogin, true);
+    assert.equal(loadSettings(tmpDir).launchAtLogin, true);
   } finally {
     fs.rmSync(tmpDir, { recursive: true, force: true });
   }

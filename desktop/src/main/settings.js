@@ -67,6 +67,7 @@ function getDefaultShortcuts(platform = process.platform) {
 const DEFAULT_SETTINGS = Object.freeze({
   delaySeconds: 0,
   minimizeToTray: true,
+  launchAtLogin: true,
   tryWinShiftS: true,
   gostEnabled: true,
   gostIdleOpacity: 0.3,
@@ -260,6 +261,14 @@ function sanitizeSettings(raw, fallback = DEFAULT_SETTINGS) {
     minimizeToTray = source.minimizeToTray;
   }
 
+  let launchAtLogin =
+    typeof base.launchAtLogin === "boolean"
+      ? base.launchAtLogin
+      : DEFAULT_SETTINGS.launchAtLogin;
+  if (typeof source.launchAtLogin === "boolean") {
+    launchAtLogin = source.launchAtLogin;
+  }
+
   let tryWinShiftS =
     typeof base.tryWinShiftS === "boolean"
       ? base.tryWinShiftS
@@ -291,6 +300,7 @@ function sanitizeSettings(raw, fallback = DEFAULT_SETTINGS) {
   return {
     delaySeconds,
     minimizeToTray,
+    launchAtLogin,
     tryWinShiftS,
     gostEnabled,
     gostIdleOpacity,

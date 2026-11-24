@@ -1,6 +1,6 @@
 {
   "name": "screensnap-desktop",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "ScreenSnap Desktop — Captura de tela (região, monitor e janela) com editor leve e exportação PNG, JPEG, PDF e área de transferência.",
   "homepage": "https://github.com/evo06/Screen-Full-Page",
   "repository": {

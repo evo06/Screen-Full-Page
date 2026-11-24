@@ -35,6 +35,34 @@ const GOST_SIZE = 64;
 const MAX_PENDING_CAPTURES = 10;
 const HIDE_LAUNCHER_SETTLE_MS = 180;
 const isSmokeTest = process.argv.includes("--smoke-test");
+const isHiddenAutoStartArg = process.argv.includes("--hidden");
+
+function isAutoStartSupported() {
+  return process.platform === "win32" || process.platform === "darwin";
+}
+
+function syncLoginItemSetting(enabled) {
+  if (isSmokeTest || !app.isPackaged || !isAutoStartSupported()) {
+    return;
+  }
+  try {
+    if (process.platform === "win32") {
+      const launchExecPath = process.env.PORTABLE_EXECUTABLE_FILE || process.execPath;
+      app.setLoginItemSettings({
+        openAtLogin: Boolean(enabled),
+        path: launchExecPath,
+        args: ["--hidden"],
+      });
+    } else if (process.platform === "darwin") {
+      app.setLoginItemSettings({
+        openAtLogin: Boolean(enabled),
+        openAsHidden: true,
+      });
+    }
+  } catch {
+    // Ignore OS policy restrictions on startup items
+  }
+}
 
 const pendingCaptures = new Map();
 const editorWindows = new Set();
@@ -755,6 +783,23 @@ function buildTrayTemplate(includeAccelerators) {
         broadcastSettingsChanged();
       },
     },
+    ...(isAutoStartSupported()
+      ? [
+          {
+            label: process.platform === "darwin" ? "Iniciar com o macOS" : "Iniciar com o Windows",
+            type: "checkbox",
+            checked: Boolean(currentSettings.launchAtLogin),
+            click: (menuItem) => {
+              currentSettings = settingsStore.updateSettings({
+                launchAtLogin: Boolean(menuItem.checked),
+              });
+              syncLoginItemSetting(currentSettings.launchAtLogin);
+              updateTrayMenu();
+              broadcastSettingsChanged();
+            },
+          },
+        ]
+      : []),
     { type: "separator" },
     {
       label: "Sair",
@@ -909,6 +954,10 @@ function registerIpcHandlers() {
       ("gostEnabled" in partial || "gostIdleOpacity" in partial || "gostPosition" in partial)
     ) {
       syncGostWindow();
+      updateTrayMenu();
+    }
+    if (partial && typeof partial === "object" && "launchAtLogin" in partial) {
+      syncLoginItemSetting(updated.launchAtLogin);
       updateTrayMenu();
     }
     broadcastSettingsChanged();
@@ -1662,7 +1711,14 @@ if (canStart) {
 
     createTray();
     refreshShortcutsAndTray();
-    createOrShowLauncher();
+    syncLoginItemSetting(currentSettings.launchAtLogin);
+
+    const startHidden =
+      isHiddenAutoStartArg ||
+      (process.platform === "darwin" && Boolean(app.getLoginItemSettings().wasOpenedAsHidden));
+    if (!startHidden || !tray) {
+      createOrShowLauncher();
+    }
     syncGostWindow();
   });
 }

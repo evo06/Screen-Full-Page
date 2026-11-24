@@ -32,6 +32,9 @@
 
   const delayPills = Array.from(document.querySelectorAll(".delay-pill"));
   const toggleTrayOnClose = document.getElementById("toggleTrayOnClose");
+  const launchAtLoginRow = document.getElementById("launchAtLoginRow");
+  const launchAtLoginLabel = document.getElementById("launchAtLoginLabel");
+  const toggleLaunchAtLogin = document.getElementById("toggleLaunchAtLogin");
   const btnOpenFolder = document.getElementById("btnOpenFolder");
 
   const btnToggleShortcuts = document.getElementById("btnToggleShortcuts");
@@ -406,6 +409,10 @@
       toggleTrayOnClose.checked = Boolean(settings[traySettingKey]);
     }
 
+    if (Object.prototype.hasOwnProperty.call(settings, "launchAtLogin") && toggleLaunchAtLogin) {
+      toggleLaunchAtLogin.checked = Boolean(settings.launchAtLogin);
+    }
+
     if (Object.prototype.hasOwnProperty.call(settings, "gostEnabled")) {
       const gostEnabled = Boolean(settings.gostEnabled);
       toggleGost.checked = gostEnabled;
@@ -679,11 +686,20 @@
 
       currentPlatform = state?.platform || "win32";
       applyShortcutsUI(state?.shortcuts || {}, currentPlatform);
+      if (launchAtLoginLabel) {
+        launchAtLoginLabel.textContent =
+          currentPlatform === "darwin" ? "Iniciar com o macOS" : "Iniciar com o Windows";
+      }
+      launchAtLoginRow?.classList.toggle(
+        "hidden",
+        currentPlatform !== "win32" && currentPlatform !== "darwin"
+      );
 
       const settings = state?.settings || {};
       applySettingsUI({
         delaySeconds: 0,
         minimizeToTray: true,
+        launchAtLogin: true,
         gostEnabled: false,
         gostIdleOpacity: 0.3,
         ...settings,
@@ -779,6 +795,20 @@
       });
     } catch (err) {
       showError(err?.message || "Erro ao atualizar preferência de bandeja.");
+    }
+  });
+
+  toggleLaunchAtLogin?.addEventListener("change", async () => {
+    if (!window.screenSnap?.updateSettings) return;
+    try {
+      const updated = await window.screenSnap.updateSettings({
+        launchAtLogin: Boolean(toggleLaunchAtLogin.checked),
+      });
+      if (updated && typeof updated === "object") {
+        applySettingsUI(updated);
+      }
+    } catch (err) {
+      showError(err?.message || "Erro ao atualizar inicialização com o sistema.");
     }
   });
 

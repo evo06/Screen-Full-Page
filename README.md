@@ -69,23 +69,23 @@ Todo o processamento acontece localmente no navegador — sem servidores externo
 
 ## Aplicativo Desktop (Windows, macOS e Linux)
 
-Além da extensão para navegador, o **ScreenSnap Desktop** (Electron) permite capturar com escolha imediata entre **um pedaço da tela (*freeze-frame*)** ou a **tela inteira** (multi-monitor e janelas específicas), com atalhos globais configuráveis (`PrtSc` como padrão no Windows/Linux, suporte automático a `Win+Shift+S` quando livre), **Modo Gost** (botão flutuante discreto `48×48` em janela `64×64`, sempre no topo sem roubar foco, semi-transparente parado — padrão `30%`, ajustável entre `15%` e `85%` — que acende ao passar o mouse, oculta-se antes do print, abre o seletor **Pedaço** / **Tela inteira** ao clicar, é arrastável com posição persistida e traz menu rápido no clique direito além de controles no Launcher e na Bandeja do sistema), editor leve (que fecha automaticamente após copiar ou salvar em **PNG**, **JPEG** ou **PDF**).
+Além da extensão para navegador, o **ScreenSnap Desktop** (Electron) permite capturar com escolha imediata entre **um pedaço da tela (*freeze-frame*)** ou a **tela inteira** (multi-monitor e janelas específicas), com atalhos globais configuráveis (`PrtSc` como padrão no Windows/Linux, suporte automático a `Win+Shift+S` quando livre), **Modo Gost** (botão flutuante discreto `48×48` em janela `64×64`, sempre no topo sem roubar foco, semi-transparente parado — padrão `30%`, ajustável entre `15%` e `85%` — que acende ao passar o mouse, oculta-se antes do print, abre o seletor **Pedaço** / **Tela inteira** ao clicar, é arrastável com posição persistida e traz menu rápido no clique direito além de controles no Launcher e na Bandeja do sistema), inicialização automática com o Windows (**Iniciar com o Windows**, abrindo silenciosamente na bandeja `^`, configurável no Launcher e na Bandeja), editor leve (que fecha automaticamente após copiar ou salvar em **PNG**, **JPEG** ou **PDF**).
 
 Os instaladores são distribuídos via **[GitHub Releases](https://github.com/evo06/Screen-Full-Page/releases/latest)**:
 
 | Plataforma | Arquivo / Formato | Tamanho | Download |
 | --- | --- | --- | --- |
-| **Windows (x64)** | Instalador NSIS (`ScreenSnap-Setup-1.1.1-x64.exe`) | `87,49 MB` | [Baixar Instalador](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Setup-1.1.1-x64.exe) |
-| **Windows (x64)** | Portátil (`ScreenSnap-Portable-1.1.1-x64.exe`) | `80,34 MB` | [Baixar Portátil](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Portable-1.1.1-x64.exe) |
+| **Windows (x64)** | Instalador NSIS (`ScreenSnap-Setup-1.1.2-x64.exe`) | `87,49 MB` | [Baixar Instalador](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Setup-1.1.2-x64.exe) |
+| **Windows (x64)** | Portátil (`ScreenSnap-Portable-1.1.2-x64.exe`) | `80,34 MB` | [Baixar Portátil](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Portable-1.1.2-x64.exe) |
 | **macOS** | `.dmg` / `.zip` | — | [Ver na Release](https://github.com/evo06/Screen-Full-Page/releases/latest) |
 | **Linux** | `.AppImage` / `.deb` | — | [Ver na Release](https://github.com/evo06/Screen-Full-Page/releases/latest) |
 
 <details>
-<summary>Checksums SHA-256 (Windows x64 v1.1.1)</summary>
+<summary>Checksums SHA-256 (Windows x64 v1.1.2)</summary>
 
 ```text
-A9A2A040B160A768BCDDADB434FAEA2FBCD2084A7E95D059E2391A79813EF219  ScreenSnap-Setup-1.1.1-x64.exe
-2EEEFB4E479AE24869D75838C61A7782AFFDAFE4CCF451DB2C42ABFDF7AC9688  ScreenSnap-Portable-1.1.1-x64.exe
+A9A2A040B160A768BCDDADB434FAEA2FBCD2084A7E95D059E2391A79813EF219  ScreenSnap-Setup-1.1.2-x64.exe
+2EEEFB4E479AE24869D75838C61A7782AFFDAFE4CCF451DB2C42ABFDF7AC9688  ScreenSnap-Portable-1.1.2-x64.exe
 ```
 
 *(As releases publicadas via GitHub Actions também anexam `SHA256SUMS.txt` com os hashes de todas as plataformas — Windows, macOS e Linux.)*
