@@ -67,6 +67,31 @@ Todo o processamento acontece localmente no navegador — sem servidores externo
 
 ---
 
+## Aplicativo Desktop (Windows, macOS e Linux)
+
+Além da extensão para navegador, o **ScreenSnap Desktop** (Electron) permite capturar **regiões com tela congelada (*freeze-frame*)**, **monitores inteiros** (multi-monitor) e **janelas específicas**, com atalhos globais configuráveis (`PrtSc` como padrão no Windows/Linux, suporte automático a `Win+Shift+S` quando livre), bandeja do sistema, editor leve e exportação para **PNG**, **JPEG**, **PDF** e área de transferência.
+
+Os instaladores são distribuídos via **[GitHub Releases](https://github.com/evo06/Screen-Full-Page/releases/latest)**:
+
+| Plataforma | Arquivo / Formato | Tamanho | Download |
+| --- | --- | --- | --- |
+| **Windows (x64)** | Instalador NSIS (`ScreenSnap-Setup-1.0.0-x64.exe`) | `87,5 MB` | [Baixar Instalador](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Setup-1.0.0-x64.exe) |
+| **Windows (x64)** | Portátil (`ScreenSnap-Portable-1.0.0-x64.exe`) | `80,3 MB` | [Baixar Portátil](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Portable-1.0.0-x64.exe) |
+| **macOS** | `.dmg` / `.zip` | — | [Ver na Release](https://github.com/evo06/Screen-Full-Page/releases/latest) |
+| **Linux** | `.AppImage` / `.deb` | — | [Ver na Release](https://github.com/evo06/Screen-Full-Page/releases/latest) |
+
+<details>
+<summary>Checksums SHA-256 (Windows x64 v1.0.0)</summary>
+
+```text
+93F4BC62FA497BCB88C9052AAEB5EF2089CE45A2B066AC50582DDC78EC4C35BF  ScreenSnap-Setup-1.0.0-x64.exe
+A71720937C534FCE6D67A78DC1B56B1C2C8B5CCE35EF240DF274A0EAA8023987  ScreenSnap-Portable-1.0.0-x64.exe
+```
+
+</details>
+
+---
+
 ## Atalhos de teclado
 
 | Ação | Windows / Linux | macOS |
