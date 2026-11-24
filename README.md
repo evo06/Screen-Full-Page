@@ -76,7 +76,7 @@ Os instaladores são distribuídos via **[GitHub Releases](https://github.com/ev
 | Plataforma | Arquivo / Formato | Tamanho | Download |
 | --- | --- | --- | --- |
 | **Windows (x64)** | Instalador NSIS (`ScreenSnap-Setup-1.1.1-x64.exe`) | `87,49 MB` | [Baixar Instalador](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Setup-1.1.1-x64.exe) |
-| **Windows (x64)** | Portátil (`ScreenSnap-Portable-1.1.1-x64.exe`) | `80,35 MB` | [Baixar Portátil](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Portable-1.1.1-x64.exe) |
+| **Windows (x64)** | Portátil (`ScreenSnap-Portable-1.1.1-x64.exe`) | `80,34 MB` | [Baixar Portátil](https://github.com/evo06/Screen-Full-Page/releases/latest/download/ScreenSnap-Portable-1.1.1-x64.exe) |
 | **macOS** | `.dmg` / `.zip` | — | [Ver na Release](https://github.com/evo06/Screen-Full-Page/releases/latest) |
 | **Linux** | `.AppImage` / `.deb` | — | [Ver na Release](https://github.com/evo06/Screen-Full-Page/releases/latest) |
 
@@ -84,8 +84,8 @@ Os instaladores são distribuídos via **[GitHub Releases](https://github.com/ev
 <summary>Checksums SHA-256 (Windows x64 v1.1.1)</summary>
 
 ```text
-BC1873E9D9F24B0211C75996B28DCD3B551DDE044C43965FCAE926115C99F4F1  ScreenSnap-Setup-1.1.1-x64.exe
-5E7338D4349319D4363C7E80121F5ED4647D71CE4412E69B774ECDD3529AB0A3  ScreenSnap-Portable-1.1.1-x64.exe
+A9A2A040B160A768BCDDADB434FAEA2FBCD2084A7E95D059E2391A79813EF219  ScreenSnap-Setup-1.1.1-x64.exe
+2EEEFB4E479AE24869D75838C61A7782AFFDAFE4CCF451DB2C42ABFDF7AC9688  ScreenSnap-Portable-1.1.1-x64.exe
 ```
 
 *(As releases publicadas via GitHub Actions também anexam `SHA256SUMS.txt` com os hashes de todas as plataformas — Windows, macOS e Linux.)*
