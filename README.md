@@ -84,8 +84,8 @@ Os instaladores são distribuídos via **[GitHub Releases](https://github.com/ev
 <summary>Checksums SHA-256 (Windows x64 v1.1.2)</summary>
 
 ```text
-A9A2A040B160A768BCDDADB434FAEA2FBCD2084A7E95D059E2391A79813EF219  ScreenSnap-Setup-1.1.2-x64.exe
-2EEEFB4E479AE24869D75838C61A7782AFFDAFE4CCF451DB2C42ABFDF7AC9688  ScreenSnap-Portable-1.1.2-x64.exe
+980F89D6909ABF7A73C012D33D7157B36FF5E284888B93384189BDE52CAFE8C3  ScreenSnap-Setup-1.1.2-x64.exe
+91BDB731B083DA16677DE2A175790E4C66EF49A608322E891F934C7FDFC51140  ScreenSnap-Portable-1.1.2-x64.exe
 ```
 
 *(As releases publicadas via GitHub Actions também anexam `SHA256SUMS.txt` com os hashes de todas as plataformas — Windows, macOS e Linux.)*
