@@ -58,6 +58,23 @@ let panState = null;
 let pendingTextPos = null;
 let toastTimer = null;
 let toastDuration = 2400;
+const AUTO_CLOSE_DELAY_MS = 350;
+let autoCloseTimer = null;
+let closingAfterExport = false;
+
+function scheduleCloseAfterExport() {
+  if (closingAfterExport) return;
+  closingAfterExport = true;
+  setExportEnabled(false);
+  autoCloseTimer = setTimeout(() => {
+    autoCloseTimer = null;
+    if (window.screenSnap?.closeWindow) {
+      window.screenSnap.closeWindow().catch(() => window.close());
+    } else {
+      window.close();
+    }
+  }, AUTO_CLOSE_DELAY_MS);
+}
 
 function scheduleToastHide(delayMs) {
   clearTimeout(toastTimer);
@@ -518,7 +535,7 @@ function makeFilename(extension) {
 }
 
 async function copyImage() {
-  if (!hasCapture) return;
+  if (!hasCapture || closingAfterExport) return;
   const composed = composeFinalCanvas();
   const blob = await canvasToBlob(composed, "image/png");
   const bytes = new Uint8Array(await blob.arrayBuffer());
@@ -527,6 +544,7 @@ async function copyImage() {
     throw new Error(res.error || "Falha ao copiar imagem.");
   }
   showToast("Imagem copiada para a área de transferência");
+  scheduleCloseAfterExport();
 }
 
 async function saveBytesWithDialog(bytes, extension, filters) {
@@ -544,19 +562,13 @@ async function saveBytesWithDialog(bytes, extension, filters) {
     throw new Error(res.error || "Não foi possível salvar o arquivo.");
   }
 
-  if (res.filePath) {
-    const savedName = res.filePath.split(/[\\/]/).pop() || defaultFilename;
-    showToast(`Salvo: ${savedName}`, {
-      label: "Mostrar na pasta",
-      onClick: () => window.screenSnap.showItemInFolder(res.filePath),
-    });
-  } else {
-    showToast(`Salvo: ${defaultFilename}`);
-  }
+  const savedName = res.filePath ? res.filePath.split(/[\\/]/).pop() || defaultFilename : defaultFilename;
+  showToast(`Salvo: ${savedName}`);
+  scheduleCloseAfterExport();
 }
 
 async function exportPng() {
-  if (!hasCapture) return;
+  if (!hasCapture || closingAfterExport) return;
   const composed = composeFinalCanvas();
   const blob = await canvasToBlob(composed, "image/png");
   const bytes = new Uint8Array(await blob.arrayBuffer());
@@ -564,7 +576,7 @@ async function exportPng() {
 }
 
 async function exportJpeg() {
-  if (!hasCapture) return;
+  if (!hasCapture || closingAfterExport) return;
   const composed = composeFinalCanvas();
   const opaque = document.createElement("canvas");
   opaque.width = composed.width;
@@ -581,7 +593,7 @@ async function exportJpeg() {
 async function exportPdf(layoutMode) {
   pdfMenu.classList.add("hidden");
   btnPdfMenu.setAttribute("aria-expanded", "false");
-  if (!hasCapture) return;
+  if (!hasCapture || closingAfterExport) return;
 
   showToast("Gerando PDF...");
   const composed = composeFinalCanvas();
@@ -986,6 +998,13 @@ window.addEventListener("keydown", (e) => {
   }[e.key.toLowerCase()];
   if (!ctrlOrCmd && !e.altKey && shortcutTool) {
     setTool(shortcutTool);
+  }
+});
+
+window.addEventListener("beforeunload", () => {
+  if (autoCloseTimer) {
+    clearTimeout(autoCloseTimer);
+    autoCloseTimer = null;
   }
 });
 

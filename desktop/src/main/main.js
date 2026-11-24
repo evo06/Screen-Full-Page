@@ -1532,7 +1532,7 @@ async function runSmokeTest() {
   editorPreloadOk = await verifySmokeWindow(
     "editor",
     EDITOR_HTML_PATH,
-    'typeof window.screenSnap?.saveFile === "function"',
+    'typeof window.screenSnap?.saveFile === "function" && typeof window.screenSnap?.copyPngToClipboard === "function" && typeof window.screenSnap?.closeWindow === "function"',
     errors
   );
 
