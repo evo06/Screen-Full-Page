@@ -18,9 +18,9 @@
     "start": "electron .",
     "test": "node --test tests/unit.test.mjs",
     "smoke": "electron . --smoke-test",
-    "build:win": "npm run icons && electron-builder --win --x64",
-    "build:mac": "npm run icons && electron-builder --mac",
-    "build:linux": "npm run icons && electron-builder --linux"
+    "build:win": "npm run icons && electron-builder --win --x64 --publish never",
+    "build:mac": "npm run icons && electron-builder --mac --publish never",
+    "build:linux": "npm run icons && electron-builder --linux --publish never"
   },
   "devDependencies": {
     "electron": "^35.0.0",
@@ -39,6 +39,7 @@
       "package.json"
     ],
     "asar": true,
+    "publish": null,
     "win": {
       "icon": "build/icon.ico",
       "extraResources": [

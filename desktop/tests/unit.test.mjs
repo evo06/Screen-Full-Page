@@ -310,6 +310,13 @@ test("package.json specifies homepage and maintainer email for Linux deb builds"
       String(pkg.build?.linux?.maintainer || "").includes("@"),
     "author.email or build.linux.maintainer must contain an email address for FpmTarget deb builds"
   );
+  assert.equal(pkg.build?.publish, null, "build.publish must be null to disable implicit CI publishing");
+  for (const scriptName of ["build:win", "build:mac", "build:linux"]) {
+    assert.ok(
+      String(pkg.scripts?.[scriptName] || "").includes("--publish never"),
+      `${scriptName} must pass --publish never`
+    );
+  }
 });
 
 test("src/shared/theme.css preserves Zagid tokens and defines --ds-mesh-launcher", () => {
